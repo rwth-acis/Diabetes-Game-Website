@@ -1,3 +1,165 @@
+<?php
+ 
+ 
+    // EDIT THE 2 LINES BELOW AS REQUIRED
+ 
+    $email_to = "feedback.diabetesgame@gmail.com";
+ 
+    $email_subject = "Neues Feedback";
+ 
+     
+ 
+     
+ 
+    function died($error) {
+ 
+        // your error code can go here
+ 
+        echo "Es tut uns leid, doch leider wurden folgende Fehler in der übertragenen Form gefunden. ";
+ 
+        echo "<br /><br />";
+ 
+        echo $error."<br /><br />";
+ 
+        echo "Bitte gehen sie zurück und beheben diese Fehler.<br /><br />";
+ 
+        die();
+ 
+    }
+ 
+     
+ 
+    // validation expected data exists
+ 
+    if(!isset($_POST['question1']) ||
+ 
+        !isset($_POST['question2']) ||
+ 
+        !isset($_POST['question3']) ||
+ 
+        !isset($_POST['question4']) ||
+ 
+        !isset($_POST['question5']) ||
+		
+		!isset($_POST['question6']) ||
+		
+		!isset($_POST['question7']) ||
+		
+		!isset($_POST['question8']) ||
+		
+		!isset($_POST['age']) ||
+		
+		!isset($_POST['gender']) ||
+		
+		!isset($_POST['diabetes']) ||
+		
+		!isset($_POST['computer'])) {
+			
+		
+ 
+        died('Es sind nicht alle Fragen beantwortet.');       
+ 
+    }
+ 
+     
+ 
+    $question1 = $_POST['question1']; // required
+ 
+    $question2 = $_POST['question2']; // required
+ 
+    $question3 = $_POST['question3']; // required
+ 
+    $question4 = $_POST['question4']; // not required
+ 
+    $question5 = $_POST['question5']; // required
+	
+    $question6 = $_POST['question6']; 
+ 
+    $question7 = $_POST['question7']; // required
+	
+	$question7 = $_POST['question8']; // required
+	
+	$age = $_POST['age'];
+	
+	$gender = $_POST['gender'];
+	
+	$diabetes = $_POST['diabetes'];
+	
+	$computer = $_POST['computer'];
+	
+	$comments = $_POST['comments']; // not required
+ 
+     
+ 
+    $error_message = "";
+ 
+
+ 
+  if(strlen($error_message) > 0) {
+ 
+    died($error_message);
+ 
+  }
+ 
+    $email_message = "Form details below.\n\n";
+ 
+     
+ 
+    function clean_string($string) {
+ 
+      $bad = array("content-type","bcc:","to:","cc:","href");
+ 
+      return str_replace($bad,"",$string);
+ 
+    }
+ 
+     
+ 
+    $email_message .= "Q1: ".$question1."\n";
+ 
+    $email_message .= "Q2: ".$question2."\n";
+ 
+    $email_message .= "Q3: ".$question3."\n";
+ 
+    $email_message .= "Q4: ".$question4."\n";
+ 
+    $email_message .= "Q5: ".$question5."\n";
+	
+	$email_message .= "Q6: ".$question6."\n";
+	 
+	$email_message .= "Q7: ".$question7."\n";
+	
+	$email_message .= "Q8: ".$question8."\n";
+	  
+	$email_message .= "Age: ".$age."\n";
+	
+	$email_message .= "Gender: ".$gender."\n";
+	
+	$email_message .= "Diabetes: ".$diabetes."\n";
+	
+	$email_message .= "Computer: ".$computer."\n";
+	
+	$email_message .= "Comments: ".$comments."\n";
+ 
+     
+	$email_from = "unknown@feedback.de";
+ 
+     
+ 
+// create email headers
+ 
+$headers = 'From: '.$email_from."\r\n".
+ 
+'Reply-To: '.$email_from."\r\n" .
+ 
+'X-Mailer: PHP/' . phpversion();
+ 
+@mail($email_to, $email_subject, $email_message, $headers);  
+ 
+?>
+ 
+ 
+ 
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +195,7 @@
                 <div class="mbr-navbar__hamburger mbr-hamburger text-white"><span class="mbr-hamburger__line"></span></div>
                 <div class="mbr-navbar__column mbr-navbar__menu">
                     <nav class="mbr-navbar__menu-box mbr-navbar__menu-box--inline-right">
-                        <div class="mbr-navbar__column"><ul class="mbr-navbar__items mbr-navbar__items--right mbr-buttons mbr-buttons--freeze mbr-buttons--right btn-decorator mbr-buttons--active"><li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="disease.html" rel="external" >KRANKHEIT</a></li> <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="about.html">ÃœBER DAS PROJEKT</a></li><li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="community.html">COMMUNITY</a></li> <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="profile.html">PROFIL</a></li></ul></div>
+                        <div class="mbr-navbar__column"><ul class="mbr-navbar__items mbr-navbar__items--right mbr-buttons mbr-buttons--freeze mbr-buttons--right btn-decorator mbr-buttons--active"><li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="disease.html" rel="external" >KRANKHEIT</a></li> <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="about.html">ÜBER DAS PROJEKT</a></li><li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="community.html">COMMUNITY</a></li> <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="profile.html">PROFIL</a></li></ul></div>
                         <div class="mbr-navbar__column"><ul class="mbr-navbar__items mbr-navbar__items--right mbr-buttons mbr-buttons--freeze mbr-buttons--right btn-inverse mbr-buttons--active"><li class="mbr-navbar__item"><a class="mbr-buttons__btn btn btn-default" href="game.html">SPIEL</a></li></ul></div>
                     </nav>
                 </div>
@@ -53,35 +215,10 @@
 
 <section class="jumbotron" style="background-color: rgb(255,255,255);">
     <div class="container"> 
-		<h2>Feedback:</h2>
-		<p>Bitte nehmen sie sich ein paar Minuten Zeit den Umfragebogen auszufÃ¼lle. Dies dauert nicht lange und hilft sehr bei der Evaluierung des Projects</p>
+		<h2>Vielen Dank für ihr Feedback</h2>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br>
 		
-		<a class="mbr-buttons__btn btn btn-default" >Zum Feedback Bogen</a>
-	
-	
-			<div id="disqus_thread"></div>
-			<script>
-				/**
-				 *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
-				 *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables
-				 */
-				/*
-				var disqus_config = function () {
-					this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-					this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-				};
-				*/
-				(function() {  // DON'T EDIT BELOW THIS LINE
-					var d = document, s = d.createElement('script');
-					
-					s.src = '//diabetesgame.disqus.com/embed.js';
-					
-					s.setAttribute('data-timestamp', +new Date());
-					(d.head || d.body).appendChild(s);
-				})();
-			</script>
-			<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
-
+		
 
 	</div>
 	
@@ -113,3 +250,5 @@
   
 </body>
 </html>
+ 
+ 
